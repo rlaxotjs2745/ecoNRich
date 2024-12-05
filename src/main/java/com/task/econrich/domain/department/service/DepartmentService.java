@@ -39,6 +39,7 @@ public class DepartmentService {
 
     @Transactional
     public void modifyDepartMentEmployeeSalary(ModifyDepartmentEmployeeSalaryDto modifyDepartmentEmployeeSalaryDto){
+        departmentRepository.findById(modifyDepartmentEmployeeSalaryDto.departmentId()).orElseThrow(() -> new CustomException(ExceptionCode.NOT_EXIST_DEPARTMENT));
         List<Employee> employeeList = employeeRepository.findAllByDepartmentId(modifyDepartmentEmployeeSalaryDto.departmentId());
         employeeList.forEach(emp -> {
             Job empJob = jobRepository.findById(emp.getJobId()).orElseThrow(() -> new CustomException(ExceptionCode.CANNOT_FIND_DATA));
